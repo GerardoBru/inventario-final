@@ -1,0 +1,10 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Compilar Proyecto Java",
+			"type": "shell",
+			"command": "cd \"c:\\Users\\chancro\\Desktop\\Inventario Final\\gention-de-inventario\" && javac -d target/classes -sourcepath src/main/java src/main/java/com/edu/tecnocomfenalco/*.java src/main/java/com/edu/tecnocomfenalco/modelo/*.java src/main/java/com/edu/tecnocomfenalco/excepciones/*.java src/main/java/com/edu/tecnocomfenalco/persistencia/*.java src/main/java/com/edu/tecnocomfenalco/controlador/*.java src/main/java/com/edu/tecnocomfenalco/gui/*.java"
+		}
+	]
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagrama de Clases - Sistema de Gestión de Inventario</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diagrama de Clases</h1>
+        <p class="subtitle">Sistema de Gestión de Inventario STF GROUP - v1.0</p>
+        
+        <div class="mermaid">
+graph TB
+    subgraph Modelo["📦 MODELO DE DATOS"]
+        Entidad["Entidad (Base)"]
+        Usuario["Usuario (Abstract)"]
+        Producto["Producto"]
+        Movimiento["MovimientoInventario"]
+        Proveedor["Proveedor"]
+        
+        Administrador["Administrador"]
+        Bodeguero["Bodeguero"]
+        Encargado["Encargado"]
+        
+        Rol["Rol: ADMIN/BODEGUERO/ENCARGADO"]
+        TipoMovimiento["TipoMovimiento: ENTRADA/SALIDA"]
+        
+        Entidad -->|hereda| Usuario
+        Entidad -->|hereda| Producto
+        Entidad -->|hereda| Movimiento
+        Entidad -->|hereda| Proveedor
+        
+        Usuario -->|hereda| Administrador
+        Usuario -->|hereda| Bodeguero
+        Usuario -->|hereda| Encargado
+        Usuario -->|usa| Rol
+        Movimiento -->|usa| TipoMovimiento
+    end
+    
+    subgraph Controladores["⚙️ CONTROLADORES"]
+        CtrlProducto["ControladorProducto"]
+        CtrlUsuario["ControladorUsuario"]
+        CtrlMovimiento["ControladorMovimiento"]
+        
+        CtrlProducto -->|gestiona| Producto
+        CtrlUsuario -->|gestiona| Usuario
+        CtrlMovimiento -->|gestiona| Movimiento
+        CtrlMovimiento -->|depende| CtrlProducto
+    end
+    
+    subgraph Persistencia["💾 PERSISTENCIA"]
+        GestorCSV["GestorCSV T"]
+        ProductoCSV["ProductoCSV"]
+        UsuarioCSV["UsuarioCSV"]
+        MovimientoCSV["MovimientoCSV"]
+        
+        GestorCSV -->|implementa| ProductoCSV
+        GestorCSV -->|implementa| UsuarioCSV
+        GestorCSV -->|implementa| MovimientoCSV
+    end
+    
+    subgraph GUI["🖥️ INTERFAZ GRÁFICA"]
+        VentanaPrincipal["VentanaPrincipal"]
+        Login["DialogoLogin"]
+        PanelProd["PanelProductos"]
+        PanelMov["PanelMovimientos"]
+        PanelRep["PanelReportes"]
+        PanelUsr["PanelUsuarios"]
+        
+        VentanaPrincipal -->|contiene| Login
+        VentanaPrincipal -->|contiene| PanelProd
+        VentanaPrincipal -->|contiene| PanelMov
+        VentanaPrincipal -->|contiene| PanelRep
+        VentanaPrincipal -->|contiene| PanelUsr
+    end
+    
+    Controladores -->|usa| Persistencia
+    GUI -->|usa| Controladores
+    
+    style Modelo fill:#e1f5ff,stroke:#01579b,stroke-width:2px
+    style Controladores fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    style Persistencia fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    style GUI fill:#fff3e0,stroke:#e65100,stroke-width:2px
+        </div>
+    </div>
+    
+    <script>
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>
